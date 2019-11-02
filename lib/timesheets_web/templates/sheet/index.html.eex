@@ -1,0 +1,37 @@
+<h1>Listing Sheets</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Sheet</th>
+      <th>Date</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= if @sheets != nil do %>
+
+<%= for sheet <- @sheets do %>
+    <tr>
+      <td><%= sheet.sheet_id %></td>
+      <td><%= sheet.date %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.sheet_path(@conn, :show, sheet) %></span>
+           </td>
+     <%= if @current_user.is_manager do %>
+      <td class="col-6">
+        <span><%= link "Edit", to: Routes.sheet_path(@conn, :edit, sheet) %></span>
+        <span><%= link "Delete", to: Routes.sheet_path(@conn, :delete, sheet), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+     <% end %>
+
+    </tr>
+<% end %>
+<% end %>
+
+  </tbody>
+</table>
+
+<span><%= link "New Sheet", to: Routes.sheet_path(@conn, :new) %></span>
